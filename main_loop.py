@@ -10,20 +10,18 @@ import time
 from calculate_results import calculate_AUC
 
 
-data_path = "C:/Users/katin/Documents/NTNU/Semester_10//data/RFF_gauss/"
+data_path = "C:/Users/katin/Documents/NTNU/Semester_10/data/KPCA_data/"
 dtype = torch.FloatTensor
 
 residual_root_path = "./detection"
-background_root_path = "./data/background"
+background_root_path = "./background"
 
-torch.autograd.set_detect_anomaly(True)
+
 
 
 def main(abu):
     start = time.time()
-    # data input
-    # **************************************************************************************************************
-    #torch.cuda.empty_cache()
+   
 
     thres = 0.000015
     chanels = 128
@@ -34,10 +32,11 @@ def main(abu):
 
     #Abu-Airport 2 image
     img = np.array(sio.loadmat(os.path.join(data_path, abu_path))['abu']).real#,dtype=np.float16)  #.real
+    
     img_reshape = img.reshape(img.shape[0]*img.shape[1],-1)[:,:100]
 
     img_n = MinMaxScaler(feature_range = (0,1)).fit_transform(img_reshape)
-    img_n = img_reshape
+  
     img_processed = np.reshape(img_n,(img.shape[0],img.shape[1],-1))
 
 
@@ -168,13 +167,13 @@ def main(abu):
             print("Time: ", end-start)
             residual_np = residual_varr.detach().cpu().squeeze().numpy() #resiudal variance
             residual_path = residual_root_path + ".mat" #Go into the detection image
-            sio.savemat(residual_path, {'detection': residual_np, 'time': end-start}) #save residual variance to this image
+            sio.savemat(residual_path, {'detection': residual_np, 'background': background_img.transpose(1, 2, 0),'time': end-start}) #save residual variance to this image
 
             # save_results = "/content/drive/MyDrive/Colab Notebooks/Auto-AD/Results/"+abu+".mat"
             # scipy.io.savemat(save_results, {'abu': residual_np})
 
-            background_path = background_root_path + ".mat"
-            sio.savemat(background_path, {'detection': background_img}) #Save background image which is the output of the network
+            # background_path = background_root_path + ".mat"
+            # sio.savemat(background_path, {'detection': background_img}) #Save background image which is the output of the network
             return
 
 if __name__ == "__main__":
