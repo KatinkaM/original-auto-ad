@@ -10,7 +10,7 @@ def calculate_AUC(image, abu_image):
 
 
     #Plotting detection map
-    det = np.transpose(det)
+    det = det
     
 
     back = sio.loadmat( image)['background']
@@ -31,6 +31,6 @@ def calculate_AUC(image, abu_image):
    
 
 
-residual_root_path = "detection.mat"
+residual_root_path = "detection_nodim.mat"
 abu = "abu-beach-4"
 calculate_AUC(residual_root_path,abu)

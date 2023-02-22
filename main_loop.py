@@ -71,6 +71,7 @@ def main(abu):
               upsample_mode='nearest', filter_skip_size=1,
               need_sigmoid=True, need_bias=True, pad=pad, act_fun='LeakyReLU').type(dtype)
     net = net.type(dtype) # see network structure
+  
     
     net_input = get_noise(input_depth, method, img_np.shape[1:]).type(dtype) #Input with input_depth as nr of channels, method is now set to 
     # #2D and it tells us which noise should be used to fill tensor (common_utils) -> outputs Tensor with uniform noise

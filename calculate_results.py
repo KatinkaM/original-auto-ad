@@ -27,7 +27,3 @@ def calculate_AUC(image, abu):
 
     print("AUC score: " + str(AUC))
 
-
-residual_root_path = "./detection_orignal1"
-abu = "abu-airport-1"
-calculate_AUC(residual_root_path, abu)
